@@ -37,8 +37,30 @@
 사용하려면 `리렌더링을 방지할 수 있는 컴포넌트`와 `최대한 상위 컴포넌트` 트리에 있는 컴포넌트에서 사용하시기 바랍니다
 
 ### 2. 컴포넌트 분리
+
 컴포넌트를 분리해서 다른 컴포넌트가 영향을 받지 않도록 만든다.
 
 ![after_separating_component](./md-assets/2-after-component-separate.png)
 
 똑같이 입력창의 숫자 하나를 추가했는데, 분리한 그 컴포넌트만 리렌더되는 것을 볼 수 있다.
+
+### 3. useCallback()
+
+`함수의 재생성을 방지`하는 훅이다.  
+가끔은 useEffect의 의존성으로 함수를 가지고 있을 때 필요하다.  
+memo를 사용할 때도 불필요한 재실행을 방지하기 위해 필요하다.
+
+`Increase`버튼만 눌렀을 뿐인데 다른 것들이 불필요하게 리렌더링 되고 있다.
+
+![before_btn_optimization](./md-assets/inc-dec-btn-clicked.png)
+
+`useState()`의 값이 바뀌면서 컴포넌트가 리렌더링 되고, 그러면서 내부 함수들이 다시 생성되니까 그 함수를 컨트롤하던 자식 컴포넌트들도 다 리렌더링 된 것이다.
+
+그 함수들을 `useCallback()`으로 감싼다.  
+(+ `<IconButton>` 컴포넌트를 memo로 감싸놨다.)
+
+![after_useCallback](<./md-assets/3-after-useCallback().png>)
+
+리렌더링이 줄어들었다.
+
+
